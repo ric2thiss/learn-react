@@ -1,0 +1,99 @@
+
+.profile-page {
+    width: 100%;
+}
+
+.profile-header {
+    margin-bottom: 30px;
+}
+
+.profile-label {
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.profile-header h1 {
+    margin-top: 6px;
+    color: #071229;
+    font-size: 36px;
+}
+
+.profile-header p {
+    margin-top: 8px;
+    color: #64748b;
+}
+
+/* =========================
+   PROFILE CARD
+========================= */
+
+.profile-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    background: white;
+    padding: 25px;
+
+    border-radius: 14px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+}
+
+.profile-avatar {
+    width: 70px;
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #071229;
+    color: white;
+
+    border-radius: 50%;
+
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.profile-info h2 {
+    color: #071229;
+}
+
+.profile-info p {
+    margin-top: 5px;
+    color: #64748b;
+}
+
+/* =========================
+   PROFILE NAVIGATION
+========================= */
+
+.profile-navigation {
+    display: flex;
+    gap: 25px;
+
+    margin-top: 25px;
+    padding-bottom: 12px;
+
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.profile-navigation a {
+    color: #64748b;
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.profile-navigation a:hover {
+    color: #071229;
+}
+
+.profile-content {
+    margin-top: 25px;
+}
