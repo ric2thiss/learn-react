@@ -1,14 +1,11 @@
 import React from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
+import Header from './Header/Header'
 
 function Layout() {
   return (
     <>
-        <header>
-            <nav>
-                <NavLink to="/products" className={(isActive)=> isActive ? "nav-link active":"nav-link"}>Products</NavLink>
-            </nav>
-        </header>
+        <Header />
 
         <Outlet />
     </>
