@@ -1,8 +1,55 @@
-nav{
-    display: flex;
-    gap: 1rem;
+.main-nav,
+.nav-list {
+  display: flex;
+  align-items: center;
 }
 
-.nav-links {
-    text-decoration: none;
+.main-nav {
+  gap: 1.5rem;
+  justify-self: start;
+}
+
+.nav-list {
+  gap: clamp(1rem, 2vw, 2rem);
+}
+
+.menu-button {
+  width: 34px;
+  height: 34px;
+  padding: 5px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.menu-button img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.nav-link {
+  color: #292929;
+  font-size: 0.92rem;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  transition: opacity 180ms ease;
+}
+
+.nav-link:hover {
+  opacity: 0.55;
+}
+
+.nav-link--active {
+  font-weight: 600;
+}
+
+@media (max-width: 760px) {
+  .nav-list {
+    display: none;
+  }
+
+  .main-nav {
+    gap: 0;
+  }
 }
