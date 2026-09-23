@@ -1,5 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import "./Navbar.css"
+import HamburgerIcon from "../../assets/hamburger-icon.png"
 
 function Navbar() {
     const navLinks = [
@@ -8,18 +10,22 @@ function Navbar() {
             path: "/"
         },
         {
-            label: "Products",
-            path: "/products"
+            label: "Collections",
+            path: "/collections"
         },
         {
-            label: "About",
-            path: "/about"
+            label: "New",
+            path: "/new"
         },
     ]
   return (
-    <nav>
-        {navLinks.map((navLink)=> <NavLink to={navLink.path} key={navLink.label}>{navLink.label}</NavLink>)}
-    </nav>
+    <>
+        <nav>
+            <div><img src={HamburgerIcon} alt="Menu Icon" /></div>
+            {navLinks.map((navLink)=> <NavLink to={navLink.path} className="nav-links" key={navLink.label}>{navLink.label}</NavLink>)}
+        </nav>
+    </>
+    
   )
 }
 

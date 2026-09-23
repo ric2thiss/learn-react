@@ -1,0 +1,27 @@
+.header-actions{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    width: 25%;
+}
+.cart-action-btn{
+    display: flex;
+    align-items: center;
+    width:  40%;
+}
+.cart-action-btn > img {
+    width: 50px;
+    margin-right: 5px;
+    position: relative;
+}
+
+.cart-action-btn > p {
+    background-color: black;
+    background-image: url('../../assets//background.png');
+    color: #fff;
+    width: 80%;
+    border-radius: 45px;
+    text-align: center;
+    padding: 1rem;
+}

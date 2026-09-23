@@ -1,0 +1,10 @@
+.main-container {
+    background-image: url("../assets/background.png");
+    min-height: 100dvh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.header-container{
+    width: 100%;
+}

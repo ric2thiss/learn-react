@@ -1,0 +1,32 @@
+.Hero{
+    width: 90%;
+    margin: 0 auto;
+}
+.hero-main{
+  margin-top: 5rem;
+  display: flex;
+  /* align-items: center; */
+}
+.hero-left{
+  display: flex;
+  flex-direction: column;
+  gap: 10rem;
+  margin-right: 1rem;
+}
+.hero-title{
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.shop-action-btn{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  background-color: gray;
+  padding: 1rem;
+}
+.landing-page-product-cards{
+  display: flex; 
+  gap: 1rem;
+  width: 100%;
+}

@@ -1,20 +1,11 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import Header from './Header/Header'
-import background from '../assets/background.png'
+import "./Layout.css"
 
 function Layout() {
   return (
-    <div
-      className="main-container"
-      style={{
-        backgroundImage: `url(${background})`,
-        minHeight: '100dvh',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
-      }}
-    >
+    <div className="main-container">
       <Header />
       <Outlet />
     </div>
