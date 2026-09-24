@@ -1,14 +1,16 @@
 import React from 'react'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Layout from './components/Layout'
-import HeroSection from './components/Hero/HeroSection'
+import HomePage from './pages/HomePage'
+import ShopPage from './pages/ShopPage'
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<HeroSection />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/shop" element={<ShopPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

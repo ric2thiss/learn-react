@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import Navbar from '../Navbar/Navbar'
 import HeaderActions from '../HeaderActions/HeaderActions'
 import Logo from "../../assets/logo.png"
@@ -9,9 +10,9 @@ function Header() {
     <header className="site-header">
       <Navbar />
 
-      <a href="/" className="site-logo" aria-label="Home">
+      <Link to="/" className="site-logo" aria-label="Home">
         <img src={Logo} alt="" />
-      </a>
+      </Link>
 
       <HeaderActions />
     </header>
