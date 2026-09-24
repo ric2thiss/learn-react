@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import "./HeroSection.css"
 import "./SearchSection.css"
@@ -7,10 +7,14 @@ import ArrowIcon from '../../assets/arrow-icon.png'
 import { useProducts } from "../../hooks/useProducts"
 
 function HeroSection() {
-  const { products, isLoading, error } = useProducts()
-  const heroProducts = products
-    .filter(product => product.category === "mens-shirts")
-    .slice(0, 2)
+  const {
+    productsByCategory,
+    getAllProductsByCategory
+  } = useProducts()
+
+  useEffect(() => {
+    getAllProductsByCategory("mens-shirts")
+  }, [])
 
   return (
     <>
@@ -27,11 +31,19 @@ function HeroSection() {
           onSubmit={(event) => event.preventDefault()}
         >
           <img src={SearchIcon} alt="" />
-          <input type="search" placeholder="Search" aria-label="Search products" />
+
+          <input
+            type="search"
+            placeholder="Search"
+            aria-label="Search products"
+          />
         </form>
       </div>
 
-      <section className="hero-showcase" aria-labelledby="collection-title">
+      <section
+        className="hero-showcase"
+        aria-labelledby="collection-title"
+      >
         <div className="hero-copy">
           <div>
             <h1 id="collection-title">
@@ -52,13 +64,13 @@ function HeroSection() {
         </div>
 
         <div className="hero-products" id="shop">
-          {isLoading && <p className="hero-products__status">Loading...</p>}
-          {error && <p className="hero-products__status">Unable to load products.</p>}
-
-          {!isLoading && !error && heroProducts.map(product => (
-            <article className="hero-product-card" key={product.id}>
+          {productsByCategory.length === 0 ? <p style={{textAlign: "center"}}>Loading ...</p>: productsByCategory.slice(0,2).map(product => (
+            <article
+              className="product-card"
+              key={product.id}
+            >
               <img
-                className="hero-product-card__image"
+                className="product-card__image"
                 src={product.thumbnail}
                 alt={product.title}
               />

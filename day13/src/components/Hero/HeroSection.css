@@ -100,7 +100,7 @@
   gap: clamp(1.25rem, 3vw, 3rem);
 }
 
-.hero-product-card {
+.product-card {
   min-width: 0;
   height: clamp(300px, 38vw, 460px);
   overflow: hidden;
@@ -108,7 +108,7 @@
   border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-.hero-product-card__image {
+.product-card__image {
   display: block;
   width: 100%;
   height: 100%;
@@ -140,17 +140,11 @@
     grid-template-columns: 1fr;
   }
 
-  .hero-product-card {
+  .product-card {
     height: 390px;
   }
 
   .shop-button {
     width: 100%;
   }
-}
-
-
-.hero-products__status {
-  grid-column: 1 / -1;
-  text-align: center;
 }
