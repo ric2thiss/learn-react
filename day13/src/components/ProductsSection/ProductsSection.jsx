@@ -1,51 +1,49 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import './ProductsSection.css'
 import { useProducts } from "../../hooks/useProducts"
+
 function ProductsSection() {
-      const {productsByCategory} = useProducts()
+  const { products, isLoading, error } = useProducts()
 
   return (
-    <section className='products-display-section'>
-        <h1 className='collection-title'>This Week {productsByCategory.length}</h1>
+    <section className="products-display-section">
+      <h2 className="collection-title">This Week</h2>
 
+      {isLoading && <p className="products-display-section__status">Loading products...</p>}
+      {error && <p className="products-display-section__status">Unable to load products.</p>}
+
+      {!isLoading && !error && (
         <div className="product-section">
-        {productsByCategory.map((product) => (
-            <article className="product-card" key={product.id}>
+          {products.map((product) => (
+            <article className="weekly-product-card" key={product.id}>
+              <div className="weekly-product-card__image-container">
+                <img
+                  className="weekly-product-card__image"
+                  src={product.thumbnail}
+                  alt={product.title}
+                />
 
-                <div className="product-card__image-container">
-                    <img
-                        className="product-card__image"
-                        src={product.thumbnail}
-                        alt={product.title}
-                    />
+                <button
+                  className="weekly-product-card__add-btn"
+                  type="button"
+                  aria-label={`Add ${product.title} to cart`}
+                >
+                  +
+                </button>
+              </div>
 
-                    <button
-                        className="product-card__add-btn"
-                        type="button"
-                    >
-                        +
-                    </button>
+              <div className="weekly-product-card__info">
+                <p className="weekly-product-card__category">{product.category}</p>
+
+                <div className="weekly-product-card__details">
+                  <h3 className="weekly-product-card__title">{product.title}</h3>
+                  <p className="weekly-product-card__price">${product.price}</p>
                 </div>
-
-                <div className="product-card__info">
-                    <p className="product-card__category">
-                        {product.category}
-                    </p>
-
-                    <div className="product-card__details">
-                        <h3 className="product-card__title">
-                            {product.title}
-                        </h3>
-
-                        <p className="product-card__price">
-                            ${product.price}
-                        </p>
-                    </div>
-                </div>
-
+              </div>
             </article>
-        ))}
+          ))}
         </div>
+      )}
     </section>
   )
 }

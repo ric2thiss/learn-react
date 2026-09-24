@@ -1,44 +1,51 @@
 import { createContext, useEffect, useState } from "react";
-import {
-    getProducts,
-    getProductById,
-    getProductsByCategory
-} from "../services/productService";
+import { getProducts, getProductById } from "../services/productService";
 
-export const ProductsContext = createContext();
+export const ProductsContext = createContext(null);
 
 export function ProductProvider({ children }) {
     const [products, setProducts] = useState([]);
-    const [productsByCategory, setProductsByCategory] = useState([]);
     const [productById, setProductById] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         async function loadProducts() {
-            const data = await getProducts();
-            setProducts(data);
+            try {
+                setIsLoading(true);
+                setError(null);
+                const data = await getProducts();
+                setProducts(data);
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setIsLoading(false);
+            }
         }
 
         loadProducts();
     }, []);
 
     async function getProduct(id) {
-        const data = await getProductById(id);
-        setProductById(data);
-    }
-
-    async function getAllProductsByCategory(category) {
-        const data = await getProductsByCategory(category);
-        setProductsByCategory(data);
+        try {
+            setError(null);
+            const data = await getProductById(id);
+            setProductById(data);
+            return data;
+        } catch (error) {
+            setError(error.message);
+            throw error;
+        }
     }
 
     return (
         <ProductsContext.Provider
             value={{
                 products,
-                productsByCategory,
                 productById,
-                getProduct,
-                getAllProductsByCategory
+                isLoading,
+                error,
+                getProduct
             }}
         >
             {children}
