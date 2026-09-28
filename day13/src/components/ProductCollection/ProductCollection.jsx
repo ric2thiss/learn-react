@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import { useProducts } from "../../hooks/useProducts"
 import {useCarts} from "../../hooks/useCarts"
+import { NavLink } from 'react-router-dom'
 
 function ProductCollection() {
     const {products} = useProducts()
@@ -60,10 +61,11 @@ function ProductCollection() {
                         </p>
 
                         <div className="product-card__details">
-
-                            <h3 className="product-card__title">
-                                {product.title}
-                            </h3>
+                            <NavLink to={`/products/${product.id}`}>
+                                <h3 className="product-card__title">
+                                    {product.title}
+                                </h3>
+                            </NavLink>
 
                             <p className="product-card__price">
                                 ${product.price}

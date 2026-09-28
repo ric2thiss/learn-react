@@ -4,6 +4,8 @@ import Layout from './components/Layout'
 import HomePage from './pages/HomePage'
 import ShopPage from './pages/ShopPage'
 import CartPage from './pages/CartPage'
+import ProductPage from './pages/ProductPage'
+import NotFoundPage from './pages/NotFoundPage'
 
 function App() {
   return (
@@ -16,6 +18,12 @@ function App() {
           <Route path='/profile'>
             <Route path='cart' element={<CartPage />} />
           </Route>
+
+
+          <Route path='/products/:id' element={<ProductPage />} />
+
+
+          <Route path='*' element={<NotFoundPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
