@@ -8,13 +8,10 @@ import { useProducts } from "../../hooks/useProducts"
 
 function HeroSection() {
   const {
-    productsByCategory,
-    getAllProductsByCategory
+    products,
+    isLoading,
+    error,
   } = useProducts()
-
-  useEffect(() => {
-    getAllProductsByCategory("mens-shirts")
-  }, [])
 
   return (
     <>
@@ -64,7 +61,7 @@ function HeroSection() {
         </div>
 
         <div className="hero-products" id="shop">
-          {productsByCategory.length === 0 ? <p style={{textAlign: "center"}}>Loading ...</p>: productsByCategory.slice(0,2).map(product => (
+          {isLoading ? <p style={{textAlign: "center"}}>Loading ...</p>: products.filter(product => product.category === "mens-shirts").slice(0,2).map(product => (
             <article
               className="product-card"
               key={product.id}

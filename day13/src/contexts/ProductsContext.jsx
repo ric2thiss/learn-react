@@ -2,43 +2,78 @@ import { createContext, useEffect, useState } from "react";
 import {
     getProducts,
     getProductById,
-    getProductsByCategory
+    filterdProducts,
 } from "../services/productService";
 
 export const ProductsContext = createContext();
 
 export function ProductProvider({ children }) {
     const [products, setProducts] = useState([]);
-    const [productsByCategory, setProductsByCategory] = useState([]);
-    const [productById, setProductById] = useState(null);
+    const [product, setProduct] = useState(null);
+    const [filteredProducts, setFilteredProducts] = useState([])
+    const [error, setError] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         async function loadProducts() {
-            const data = await getProducts();
-            setProducts(data);
+            try {
+                setIsLoading(true);
+                setError(null);
+
+                const data = await getProducts();
+
+                setProducts(data);
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setIsLoading(false);
+            }
         }
 
         loadProducts();
     }, []);
 
-    async function getProduct(id) {
-        const data = await getProductById(id);
-        setProductById(data);
+   async function getProduct(id) {
+        try {
+            setError(null);
+
+            const data = await getProductById(id);
+
+            setProduct(data);
+
+            return data;
+        } catch (error) {
+            setError(error.message);
+            throw error;
+        }
     }
 
-    async function getAllProductsByCategory(category) {
-        const data = await getProductsByCategory(category);
-        setProductsByCategory(data);
+    async function getFilteredProducts(category){
+        try {
+            setError(null)
+            setIsLoading(true)
+
+            const data = await filterdProducts(category);
+
+            setFilteredProducts(data)
+            return data
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     return (
         <ProductsContext.Provider
             value={{
                 products,
-                productsByCategory,
-                productById,
+                product,
+                filteredProducts,
+                isLoading,
+                error,
                 getProduct,
-                getAllProductsByCategory
+                getFilteredProducts,
             }}
         >
             {children}

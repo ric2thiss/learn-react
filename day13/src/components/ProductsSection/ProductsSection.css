@@ -39,6 +39,8 @@
 
 .product-card {
     flex: 0 0 380px;
+    height: fit-content;
+    padding: 10px;
     min-width: 0;
 }
 
@@ -162,5 +164,40 @@
 }
 
 .product-section::-webkit-scrollbar-track {
+    background-color: #eee;
+}
+
+/* =========================
+   NAVIGATION PRODUCT SECTION
+========================= */
+
+.product-navigation {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.product-navigation button {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #ccc;
+    background-color: transparent;
+
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: #333;
+
+    cursor: pointer;
+
+    transition: background-color 0.2s ease;
+}
+
+.product-navigation button:hover {
     background-color: #eee;
 }
