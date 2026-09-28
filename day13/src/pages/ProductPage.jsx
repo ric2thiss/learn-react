@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useProducts } from '../hooks/useProducts';
+import {useCarts} from '../hooks/useCarts'
 
 function ProductPage() {
     const { id } = useParams();
     const { getProduct, product, isLoading, error } = useProducts();
+    const {handleAddToCart} = useCarts()
 
     useEffect(() => {
         getProduct(id);
@@ -32,7 +34,7 @@ function ProductPage() {
                     <h1 style={styles.title}>{product.title}</h1>
                     <p style={styles.price}>${product.price}</p>
                     <p style={styles.description}>{product.description}</p>
-                    <button style={styles.button}>Add to Cart</button>
+                    <button style={styles.button} onClick={()=> handleAddToCart(product.id)}>Add to Cart</button>
                 </div>
             </div>
         </div>
