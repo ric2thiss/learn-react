@@ -33,18 +33,21 @@ export function ProductProvider({ children }) {
         loadProducts();
     }, []);
 
-   async function getProduct(id) {
+    async function getProduct(id) {
         try {
+            setIsLoading(true);
             setError(null);
+            setProduct(null);
 
             const data = await getProductById(id);
 
             setProduct(data);
-
             return data;
         } catch (error) {
             setError(error.message);
-            throw error;
+            setProduct(null);
+        } finally {
+            setIsLoading(false);
         }
     }
 
