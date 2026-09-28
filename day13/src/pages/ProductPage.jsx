@@ -1,53 +1,42 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useProducts } from '../hooks/useProducts';
 
 function ProductPage() {
     const { id } = useParams();
-    // Assuming getProduct from useProducts is already stable or memoized inside the hook.
-    // If it isn't, we wrap our caller logic in a stable useCallback here.
-    const { getProduct, product } = useProducts();
-
-    const fetchProductData = useCallback(async (productId) => {
-      if (!productId) return;
-      await getProduct(productId);
-    }, [getProduct]);
+    const { getProduct, product, isLoading, error } = useProducts();
 
     useEffect(() => {
-      fetchProductData(id);
-    }, [id, fetchProductData]);
+        getProduct(id);
+    }, [id]);
 
-  // 1. Check if there is no ID in the URL path
-  if (!id) {
-    return <div style={styles.error}>No product ID provided.</div>;
-  }
+    if (isLoading) {
+        return <div style={styles.loading}>Loading product details...</div>;
+    }
 
-  // 2. Check loading state (assuming your hook sets product to null/undefined while loading)
-  // Note: If your hook sets an explicit 'loading' boolean, use that instead.
-  if (product === undefined) {
-    return <div style={styles.loading}>Loading product details...</div>;
-  }
+    if (error) {
+        return <div style={styles.error}>{error}</div>;
+    }
 
-  // 3. Check if the fetch finished but returned no data (e.g., 404 or empty response)
-  if (product === null) {
-    return <div style={styles.error}>No product found.</div>;
-  }
+    if (!product) {
+        return <div style={styles.error}>Product not found.</div>;
+    }
 
-  return (
-    <div style={{display:"flex", alignItems:"center", justifyContent:"center", height:"80dvh"}}>
-        <div style={styles.card}>
-            <div style={styles.imageContainer}>
-                <img src={product.thumbnail} alt={product.title} style={styles.image} />
-            </div>
-            <div style={styles.detailsContainer}>
-                <h1 style={styles.title}>{product.title}</h1>
-                <p style={styles.price}>${product.price}</p>
-                <p style={styles.description}>{product.description}</p>
-                <button style={styles.button}>Add to Cart</button>
+    return (
+        <div style={{display:"flex", alignItems:"center", justifyContent:"center", height:"80dvh"}}>
+            <div style={styles.card}>
+                <div style={styles.imageContainer}>
+                    <img src={product.thumbnail} alt={product.title} style={styles.image} />
+                </div>
+                <div style={styles.detailsContainer}>
+                    <h1 style={styles.title}>{product.title}</h1>
+                    <p style={styles.price}>${product.price}</p>
+                    <p style={styles.description}>{product.description}</p>
+                    <button style={styles.button}>Add to Cart</button>
+                </div>
             </div>
         </div>
-    </div>
-  )
+    )
 }
 
 const styles = {
