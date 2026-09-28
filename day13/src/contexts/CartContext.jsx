@@ -13,13 +13,13 @@ export function CartProvider({ children }) {
             const product = await getProductById(id);
 
             setCart((prev)=>{
-                const isExist = cart.some(prod => prod.id === id)
+                const isExist = prev.some(prod => prod.id === id)
 
                 if(isExist){
-                    return prev.map((prod)=> {
+                    return prev.map((prod)=> 
                         prod.id === id ?
                         {...prod, quantity: prod.quantity + 1}:prod
-                    })
+                    )
                 }
 
                 return [...prev, {...product, quantity: 1}]

@@ -1,20 +1,36 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
 import { useProducts } from '../hooks/useProducts';
 
 function ProductPage() {
     const { id } = useParams();
+    // Assuming getProduct from useProducts is already stable or memoized inside the hook.
+    // If it isn't, we wrap our caller logic in a stable useCallback here.
     const { getProduct, product } = useProducts();
 
-    useEffect(() => {
-      const fetchProductData = async () => {
-        await getProduct(id);
-      };
-      fetchProductData();
-    }, [id, getProduct]);
+    const fetchProductData = useCallback(async (productId) => {
+      if (!productId) return;
+      await getProduct(productId);
+    }, [getProduct]);
 
-  if (!product) {
+    useEffect(() => {
+      fetchProductData(id);
+    }, [id, fetchProductData]);
+
+  // 1. Check if there is no ID in the URL path
+  if (!id) {
+    return <div style={styles.error}>No product ID provided.</div>;
+  }
+
+  // 2. Check loading state (assuming your hook sets product to null/undefined while loading)
+  // Note: If your hook sets an explicit 'loading' boolean, use that instead.
+  if (product === undefined) {
     return <div style={styles.loading}>Loading product details...</div>;
+  }
+
+  // 3. Check if the fetch finished but returned no data (e.g., 404 or empty response)
+  if (product === null) {
+    return <div style={styles.error}>No product found.</div>;
   }
 
   return (
@@ -34,17 +50,7 @@ function ProductPage() {
   )
 }
 
-// Inline styles defined neatly at the bottom of the file
 const styles = {
-    container: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: '80vh',
-        padding: '20px',
-        backgroundColor: '#f9f9f9',
-        fontFamily: 'system-ui, sans-serif'
-    },
     card: {
         display: 'flex',
         flexDirection: 'row',
@@ -111,6 +117,16 @@ const styles = {
         height: '50vh',
         fontSize: '1.2rem',
         color: '#666',
+        fontFamily: 'system-ui, sans-serif'
+    },
+    error: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '50vh',
+        fontSize: '1.2rem',
+        color: '#ff3333',
+        fontWeight: '500',
         fontFamily: 'system-ui, sans-serif'
     }
 };
