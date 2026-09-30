@@ -3,15 +3,12 @@ import './ProductsSection.css'
 import { useProducts } from "../../hooks/useProducts"
 
 function ProductsSection({title}) {
-    const { products, getFilteredProducts, filteredProducts, isLoading } = useProducts()
-    // console.log(products)
+    const { products, filterProductsLists, isLoading } = useProducts()
 
     const productSectionRef = useRef(null)
 
     function handleScroll(direction) {
         const container = productSectionRef.current
-
-        console.log(container)
 
         if (!container) return
 
@@ -24,6 +21,7 @@ function ProductsSection({title}) {
             behavior: "smooth"
         })
     }
+
 
     const latestTimestamp = products.length > 0 ? Math.max(...products.map(product => Date.parse(product.meta.createdAt))):null;
     
@@ -43,7 +41,7 @@ function ProductsSection({title}) {
                     {title === "This Week" ?  `This Week (${recentProducts.length})`: title} 
                 </h1>
                 {title === "This Week" && 
-                <select onChange={(e)=> getFilteredProducts(e.target.value)} style={{height:"2rem"}}>
+                <select onChange={(e)=> filterProductsLists(e.target.value)} style={{height:"2rem"}}>
                     <option>Select Filter</option>
                     {categories.map(prod => (
                         <option value={prod} key={prod}>{prod.toUpperCase()}</option>

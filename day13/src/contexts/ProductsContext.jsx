@@ -33,6 +33,15 @@ export function ProductProvider({ children }) {
         loadProducts();
     }, []);
 
+    function filterProductsLists(filter) {
+        if(!filter || filter ===""){
+            setFilteredProducts(products);
+            return;
+        }
+        const result = products.filter((prod)=> prod.category === filter);
+        setFilteredProducts(result);
+    }
+
     async function getProduct(id) {
         try {
             setIsLoading(true);
@@ -51,21 +60,21 @@ export function ProductProvider({ children }) {
         }
     }
 
-    async function getFilteredProducts(category){
-        try {
-            setError(null)
-            setIsLoading(true)
+    // async function getFilteredProducts(category){
+    //     try {
+    //         setError(null)
+    //         setIsLoading(true)
 
-            const data = await filterdProducts(category);
+    //         const data = await filterdProducts(category);
 
-            setFilteredProducts(data)
-            return data
-        } catch (error) {
-            setError(error.message);
-        } finally {
-            setIsLoading(false);
-        }
-    }
+    //         setFilteredProducts(data)
+    //         return data
+    //     } catch (error) {
+    //         setError(error.message);
+    //     } finally {
+    //         setIsLoading(false);
+    //     }
+    // }
 
     return (
         <ProductsContext.Provider
@@ -76,7 +85,8 @@ export function ProductProvider({ children }) {
                 isLoading,
                 error,
                 getProduct,
-                getFilteredProducts,
+                // getFilteredProducts,
+                filterProductsLists
             }}
         >
             {children}
