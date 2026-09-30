@@ -7,9 +7,8 @@ function ProductCollection() {
   const { products, filteredProducts } = useProducts();
   const { handleAddToCart } = useCarts();
 
-  // Opsyonal: Gamitin ang useMemo para hindi paulit-ulit na kalkulahin ang listahan tuwing mag-re-render ang component
   const displayedProducts = useMemo(() => {
-    return filteredProducts?.length > 0 ? filteredProducts : products;
+    return filteredProducts ?? products;
   }, [products, filteredProducts]);
 
   return (
@@ -40,7 +39,6 @@ function ProductCollection() {
                 className="product-card__add-btn"
                 type="button"
                 onClick={() => {
-                  console.log(`Product: ${product.id}`);
                   handleAddToCart(product.id);
                 }}
               >

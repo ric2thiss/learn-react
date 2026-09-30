@@ -42,7 +42,7 @@ function ProductsSection({title}) {
                 </h1>
                 {title === "This Week" && 
                 <select onChange={(e)=> filterProductsLists(e.target.value)} style={{height:"2rem"}}>
-                    <option>Select Filter</option>
+                    <option value="">All Categories</option>
                     {categories.map(prod => (
                         <option value={prod} key={prod}>{prod.toUpperCase()}</option>
                     ))}
@@ -58,7 +58,7 @@ function ProductsSection({title}) {
                 {isLoading ? (
                     <p>Loading...</p>
                 ) : (
-                    (recentProducts?.length > 0 ? recentProducts : products).map((product) => 
+                    (recentProducts??products).map((product) => 
                     
                     <article
                         className="product-card"
