@@ -9,6 +9,7 @@ import { useProducts } from "../../hooks/useProducts"
 function HeroSection() {
   const {
     products,
+    filteredProducts,
     isLoading,
     error,
   } = useProducts()
@@ -61,7 +62,7 @@ function HeroSection() {
         </div>
 
         <div className="hero-products" id="shop">
-          {isLoading ? <p style={{textAlign: "center"}}>Loading ...</p>: products.filter(product => product.category === "mens-shirts").slice(0,2).map(product => (
+          {isLoading ? <p style={{textAlign: "center"}}>Loading ...</p>: (filteredProducts??products).filter(product => product.category === "mens-shirts").slice(0,2).map(product => (
             <article
               className="product-card"
               key={product.id}
