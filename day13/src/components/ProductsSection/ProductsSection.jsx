@@ -3,7 +3,7 @@ import './ProductsSection.css'
 import { useProducts } from "../../hooks/useProducts"
 
 function ProductsSection({title}) {
-    const { products, filterProductsLists, isLoading } = useProducts()
+    const { products, filterProducts, isLoading } = useProducts()
 
     const productSectionRef = useRef(null)
 

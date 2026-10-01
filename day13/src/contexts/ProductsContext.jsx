@@ -34,7 +34,7 @@ export function ProductProvider({ children }) {
 
     function filterProducts(filter) {
         if(!filter){
-            setFilteredProducts(products);
+            setFilteredProducts(null);
             return;
         }
         const result = products.filter((prod)=> prod.category === filter);

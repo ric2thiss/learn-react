@@ -11,6 +11,10 @@ function ProductCollection() {
     return filteredProducts ?? products;
   }, [products, filteredProducts]);
 
+  if(displayedProducts.length === 0){
+    return <p>No Products Found!</p>
+  }
+
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
