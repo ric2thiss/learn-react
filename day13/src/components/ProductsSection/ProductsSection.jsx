@@ -1,9 +1,19 @@
 import React, { useRef } from 'react'
 import './ProductsSection.css'
 import { useProducts } from "../../hooks/useProducts"
+import { getProducts } from '../../services/productService'
+import { useFetch } from '../../hooks/useFetch'
 
 function ProductsSection({title}) {
-    const { products, filterProducts, isLoading } = useProducts()
+    const { filterProducts } = useProducts()
+
+    const {data, isLoading, error} = useFetch(getProducts)
+
+    if(!data) return <p>No Products Found!</p>
+
+    const products = data.products
+
+    console.log(products)
 
     const productSectionRef = useRef(null)
 
