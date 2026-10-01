@@ -4,17 +4,9 @@ import { useProducts } from "../../hooks/useProducts"
 import { getProducts } from '../../services/productService'
 import { useFetch } from '../../hooks/useFetch'
 
-function ProductsSection({title}) {
+function ProductsSection({ title }) {
     const { filterProducts } = useProducts()
-
-    const {data, isLoading, error} = useFetch(getProducts)
-
-    if(!data) return <p>No Products Found!</p>
-
-    const products = data.products
-
-    console.log(products)
-
+    const { data: products, isLoading, error } = useFetch(getProducts)
     const productSectionRef = useRef(null)
 
     function handleScroll(direction) {
@@ -32,45 +24,69 @@ function ProductsSection({title}) {
         })
     }
 
-    const latestTimestamp = products.length > 0
-        ? Math.max(...products.map(product => Date.parse(product.meta.createdAt)))
-        : null;
+    if (isLoading) {
+        return <p>Loading...</p>
+    }
 
-    const sevenDaysAgoTimestamp = latestTimestamp
-        ? latestTimestamp - (7 * 24 * 60 * 60 * 1000)
-        : null;
+    if (error) {
+        return <p>Error: {error}</p>
+    }
 
-    const recentProducts = products.filter(prod => {
-        if (!sevenDaysAgoTimestamp) return false;
-        return Date.parse(prod.meta.createdAt) >= sevenDaysAgoTimestamp;
-    });
+    if (!products || products.length === 0) {
+        return <p>No Products Found!</p>
+    }
 
-    const categories = [...new Set(products.map(prod => prod.category))]
+    const latestTimestamp = Math.max(
+        ...products.map(product => Date.parse(product.meta.createdAt))
+    )
+
+    const sevenDaysAgoTimestamp =
+        latestTimestamp - (7 * 24 * 60 * 60 * 1000)
+
+    const recentProducts = products.filter(product =>
+        Date.parse(product.meta.createdAt) >= sevenDaysAgoTimestamp
+    )
+
+    const categories = [
+        ...new Set(products.map(product => product.category))
+    ]
 
     return (
         <section className="products-display-section">
-            <div style={{display:"flex", justifyContent: "space-between", alignItems: "center"}}>
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center"
+                }}
+            >
                 <h1 className="collection-title">
-                    {title === "This Week" ? `This Week (${recentProducts.length})` : title}
+                    {title === "This Week"
+                        ? `This Week (${recentProducts.length})`
+                        : title}
                 </h1>
-                {title === "This Week" &&
-                <select onChange={(e)=> filterProducts(e.target.value)} style={{height:"2rem"}}>
-                    <option value="">All Categories</option>
-                    {categories.map(prod => (
-                        <option value={prod} key={prod}>{prod.toUpperCase()}</option>
-                    ))}
-                </select>
-                }
+
+                {title === "This Week" && (
+                    <select
+                        onChange={(event) => filterProducts(event.target.value)}
+                        style={{ height: "2rem" }}
+                    >
+                        <option value="">All Categories</option>
+
+                        {categories.map(category => (
+                            <option value={category} key={category}>
+                                {category.toUpperCase()}
+                            </option>
+                        ))}
+                    </select>
+                )}
             </div>
 
             <div
                 className="product-section"
                 ref={productSectionRef}
             >
-                {isLoading ? (
-                    <p>Loading...</p>
-                ) : (
-                    recentProducts.map((product) =>
+                {recentProducts.map(product => (
                     <article
                         className="product-card"
                         key={product.id}
@@ -106,8 +122,7 @@ function ProductsSection({title}) {
                             </div>
                         </div>
                     </article>
-                    )
-                )}
+                ))}
             </div>
 
             <div className="product-navigation">
