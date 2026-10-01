@@ -41,7 +41,7 @@ function ProductsSection({title}) {
                     {title === "This Week" ?  `This Week (${recentProducts.length})`: title} 
                 </h1>
                 {title === "This Week" && 
-                <select onChange={(e)=> filterProductsLists(e.target.value)} style={{height:"2rem"}}>
+                <select onChange={(e)=> filterProducts(e.target.value)} style={{height:"2rem"}}>
                     <option value="">All Categories</option>
                     {categories.map(prod => (
                         <option value={prod} key={prod}>{prod.toUpperCase()}</option>

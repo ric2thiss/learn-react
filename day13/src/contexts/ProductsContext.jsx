@@ -2,7 +2,6 @@ import { createContext, useEffect, useState } from "react";
 import {
     getProducts,
     getProductById,
-    filterdProducts,
 } from "../services/productService";
 
 export const ProductsContext = createContext();
@@ -33,8 +32,8 @@ export function ProductProvider({ children }) {
         loadProducts();
     }, []);
 
-    function filterProductsLists(filter) {
-        if(!filter || filter ===""){
+    function filterProducts(filter) {
+        if(!filter){
             setFilteredProducts(products);
             return;
         }
@@ -60,22 +59,6 @@ export function ProductProvider({ children }) {
         }
     }
 
-    // async function getFilteredProducts(category){
-    //     try {
-    //         setError(null)
-    //         setIsLoading(true)
-
-    //         const data = await filterdProducts(category);
-
-    //         setFilteredProducts(data)
-    //         return data
-    //     } catch (error) {
-    //         setError(error.message);
-    //     } finally {
-    //         setIsLoading(false);
-    //     }
-    // }
-
     return (
         <ProductsContext.Provider
             value={{
@@ -85,8 +68,7 @@ export function ProductProvider({ children }) {
                 isLoading,
                 error,
                 getProduct,
-                // getFilteredProducts,
-                filterProductsLists
+                filterProducts
             }}
         >
             {children}

@@ -7,8 +7,7 @@ export function CartProvider({ children }) {
     const [cart, setCart] = useState([]);
 
     async function handleAddToCart(id) {
-        try {
-            console.log("This is handle Cart Action");
+        try { 
             
             const product = await getProductById(id);
 
