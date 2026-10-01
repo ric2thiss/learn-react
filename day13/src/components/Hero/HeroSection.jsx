@@ -14,6 +14,10 @@ function HeroSection() {
     error,
   } = useProducts()
 
+  if(filteredProducts.length === 0){
+    return <p>No Products Found!</p>
+  }
+
   return (
     <>
       <div className="hero-tools">
