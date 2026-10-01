@@ -22,10 +22,13 @@ function ProductsSection({title}) {
         })
     }
 
+    const latestTimestamp = products.length > 0
+        ? Math.max(...products.map(product => Date.parse(product.meta.createdAt)))
+        : null;
 
-    const latestTimestamp = products.length > 0 ? Math.max(...products.map(product => Date.parse(product.meta.createdAt))):null;
-    
-    const sevenDaysAgoTimestamp = latestTimestamp - (7*24*60*60*1000)
+    const sevenDaysAgoTimestamp = latestTimestamp
+        ? latestTimestamp - (7 * 24 * 60 * 60 * 1000)
+        : null;
 
     const recentProducts = products.filter(prod => {
         if (!sevenDaysAgoTimestamp) return false;
@@ -38,9 +41,9 @@ function ProductsSection({title}) {
         <section className="products-display-section">
             <div style={{display:"flex", justifyContent: "space-between", alignItems: "center"}}>
                 <h1 className="collection-title">
-                    {title === "This Week" ?  `This Week (${recentProducts.length})`: title} 
+                    {title === "This Week" ? `This Week (${recentProducts.length})` : title}
                 </h1>
-                {title === "This Week" && 
+                {title === "This Week" &&
                 <select onChange={(e)=> filterProducts(e.target.value)} style={{height:"2rem"}}>
                     <option value="">All Categories</option>
                     {categories.map(prod => (
@@ -48,7 +51,6 @@ function ProductsSection({title}) {
                     ))}
                 </select>
                 }
-                
             </div>
 
             <div
@@ -58,14 +60,12 @@ function ProductsSection({title}) {
                 {isLoading ? (
                     <p>Loading...</p>
                 ) : (
-                    (recentProducts??products).map((product) => 
-                    
+                    recentProducts.map((product) =>
                     <article
                         className="product-card"
                         key={product.id}
                     >
                         <div className="product-card__image-container">
-
                             <img
                                 className="product-card__image"
                                 src={product.thumbnail}
@@ -78,17 +78,14 @@ function ProductsSection({title}) {
                             >
                                 +
                             </button>
-
                         </div>
 
                         <div className="product-card__info">
-
                             <p className="product-card__category">
                                 {product.category}
                             </p>
 
                             <div className="product-card__details">
-
                                 <h3 className="product-card__title">
                                     {product.title}
                                 </h3>
@@ -96,9 +93,7 @@ function ProductsSection({title}) {
                                 <p className="product-card__price">
                                     ${product.price}
                                 </p>
-
                             </div>
-
                         </div>
                     </article>
                     )
@@ -106,7 +101,6 @@ function ProductsSection({title}) {
             </div>
 
             <div className="product-navigation">
-
                 <button
                     type="button"
                     onClick={() => handleScroll("left")}
@@ -122,9 +116,7 @@ function ProductsSection({title}) {
                 >
                     ›
                 </button>
-
             </div>
-
         </section>
     )
 }
