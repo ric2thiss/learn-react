@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import "./HeaderActions.css"
 import {NavLink} from "react-router-dom"
 import ProfileIcon from "../../assets/profile-action-btn.png"
