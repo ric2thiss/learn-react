@@ -1,5 +1,5 @@
 import { useFetch } from "../hooks/useFetch";
-import { getProducts } from "../services/productService";
+import { getProducts } from "../features/products/productService";
 
 function UseFetchDemoPage() {
     const {
