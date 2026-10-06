@@ -201,3 +201,28 @@
 .product-navigation button:hover {
     background-color: #eee;
 }
+
+.products-section__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.products-section__header select {
+    min-height: 2rem;
+}
+
+.product-collection {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+    margin-top: 2rem;
+    padding-bottom: 12px;
+}
+
+.product-collection .product-card {
+    flex: 0 0 450px;
+}
