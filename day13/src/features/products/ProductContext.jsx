@@ -1,31 +1,32 @@
 import { createContext, useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
-import {getProducts} from "./productService"
+import { getProducts } from "./productService";
 
-export const ProductContext = createContext();
+export const ProductContext = createContext(null);
 
-export function ProductProvider({children}){
-    const {data:products, isLoading, error} = useFetch(getProducts)
-    const [filteredProducts, setFilteredProducts] = useState(null)
+export function ProductProvider({ children }) {
+    const { data: products = [], isLoading, error } = useFetch(getProducts);
+    const [selectedCategory, setSelectedCategory] = useState("");
+
+    const filteredProducts = selectedCategory
+        ? products.filter((product) => product.category === selectedCategory)
+        : null;
 
     function filterProducts(category) {
-        if(!category){
-            setFilteredProducts(null);
-            return;
-        }
-        const result = products.filter((prod)=> prod.category === category);
-        setFilteredProducts(result);
+        setSelectedCategory(category);
     }
 
     return (
-        <ProductContext.Provider value={{
-            products,
-            isLoading,
-            error,
-            filteredProducts,
-            filterProducts
-        }}>
+        <ProductContext.Provider
+            value={{
+                products,
+                isLoading,
+                error,
+                filteredProducts,
+                filterProducts,
+            }}
+        >
             {children}
         </ProductContext.Provider>
-    )
+    );
 }
