@@ -1,11 +1,11 @@
 import { createContext, useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
-import {getProduct} from "./productService"
+import {getProducts} from "./productService"
 
 export const ProductContext = createContext();
 
 export function ProductProvider({children}){
-    const {data:products, isLoading, error} = useFetch(getProduct)
+    const {data:products, isLoading, error} = useFetch(getProducts)
     const [filteredProducts, setFilteredProducts] = useState(null)
 
     function filterProducts(category) {

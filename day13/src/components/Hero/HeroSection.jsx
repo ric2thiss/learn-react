@@ -4,15 +4,10 @@ import "./HeroSection.css"
 import "./SearchSection.css"
 import SearchIcon from "../../assets/search-icon.png"
 import ArrowIcon from '../../assets/arrow-icon.png'
-import { useProducts } from "../../hooks/useProducts"
+import {useProducts} from "../../features/products/useProducts"
 
 function HeroSection() {
-  const {
-    products,
-    filteredProducts,
-    isLoading,
-    error,
-  } = useProducts()
+  const {products, isLoading, error, filteredProducts, filterProducts} = useProducts()
 
   return (
     <>
