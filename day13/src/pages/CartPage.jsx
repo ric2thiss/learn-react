@@ -1,5 +1,5 @@
 import React from 'react';
-import { useCarts } from "../hooks/useCarts";
+import { useCarts } from "../features/cart/useCarts";
 
 function CartPage() {
   const { cart, handleAddQuantity, handleDecrementQuantity } = useCarts();
