@@ -5,7 +5,8 @@ import { getProducts } from "./productService";
 export const ProductContext = createContext(null);
 
 export function ProductProvider({ children }) {
-    const { data: products = [], isLoading, error } = useFetch(getProducts);
+    const { data, isLoading, error } = useFetch(getProducts);
+    const products = data ?? [];
     const [selectedCategory, setSelectedCategory] = useState("");
 
     const filteredProducts = selectedCategory
