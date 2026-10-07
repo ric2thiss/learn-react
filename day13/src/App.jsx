@@ -22,6 +22,7 @@ function App() {
           </Route>
 
           <Route path="/products/:id" element={<ProductPage />} />
+          <Route path='/products' element={<ShopPage />}/>
 
           <Route path="*" element={<NotFoundPage />} />
         </Route>

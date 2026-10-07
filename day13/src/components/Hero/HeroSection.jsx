@@ -5,10 +5,22 @@ import "./SearchSection.css"
 import SearchIcon from "../../assets/search-icon.png"
 import ArrowIcon from '../../assets/arrow-icon.png'
 import {useProducts} from "../../features/products/useProducts"
+import { useNavigate } from 'react-router-dom'
 
 function HeroSection() {
   const {products, isLoading, error, filteredProducts, filterProducts} = useProducts()
+  const navigate = useNavigate();
 
+  function handleSearch(e){
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget)
+    const search = formData.get("search")?.trim();
+
+    if(!search) return;
+
+    navigate(`/products/search=${encodeURIComponent(search)}`)
+  }
   return (
     <>
       <div className="hero-tools">
@@ -21,7 +33,8 @@ function HeroSection() {
         <form
           className="search-box"
           role="search"
-          onSubmit={(event) => event.preventDefault()}
+          name='search'
+          onSubmit={handleSearch}
         >
           <img src={SearchIcon} alt="" />
 
