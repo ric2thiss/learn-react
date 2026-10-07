@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import "./HeroSection.css"
 import "./SearchSection.css"
@@ -8,7 +8,7 @@ import {useProducts} from "../../features/products/useProducts"
 import { useNavigate } from 'react-router-dom'
 
 function HeroSection() {
-  const {products, isLoading, error, filteredProducts, filterProducts} = useProducts()
+  const {products, isLoading, error} = useProducts()
   const navigate = useNavigate();
 
   function handleSearch(e){
@@ -19,7 +19,7 @@ function HeroSection() {
 
     if(!search) return;
 
-    navigate(`/products/search=${encodeURIComponent(search)}`)
+    navigate(`/products?search=${encodeURIComponent(search)}`)
   }
   return (
     <>
@@ -33,13 +33,13 @@ function HeroSection() {
         <form
           className="search-box"
           role="search"
-          name='search'
           onSubmit={handleSearch}
         >
           <img src={SearchIcon} alt="" />
 
           <input
             type="search"
+            name="search"
             placeholder="Search"
             aria-label="Search products"
           />
@@ -70,7 +70,7 @@ function HeroSection() {
         </div>
 
         <div className="hero-products" id="shop">
-          {isLoading ? <p style={{textAlign: "center"}}>Loading ...</p>: (filteredProducts??products).filter(product => product.category === "mens-shirts").slice(0,2).map(product => (
+          {isLoading ? <p style={{textAlign: "center"}}>Loading ...</p> : error ? <p role="alert">{error}</p> : products.filter(product => product.category === "mens-shirts").slice(0,2).map(product => (
             <article
               className="product-card"
               key={product.id}
