@@ -1,38 +1,29 @@
 import { useEffect, useState } from "react";
 
 export function useFetch(callback) {
-    const [data, setData] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const controller = new AbortController()
-        async function loadData() {
-            try {
-                setIsLoading(true);
-                setError(null);
+  useEffect(() => {
+    const controller = new AbortController();
 
-                const result = await callback(controller.signal);
-                setData(result);
-            } catch (error) {
-                if(error.name !== "AbortError"){
-                    setError(error.message);
-                }
-            } finally {
-                setIsLoading(false);
-            }
-        }
+    async function loadData() {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const result = await callback(controller.signal);
+        if (!controller.signal.aborted) setData(result);
+      } catch (err) {
+        if (!controller.signal.aborted) setError(err.message);
+      } finally {
+        if (!controller.signal.aborted) setIsLoading(false);
+      }
+    }
 
-        loadData();
+    loadData();
+    return () => controller.abort();
+  }, [callback]);
 
-        return ()=>{
-            controller.abort()
-        }
-    }, []);
-
-    return {
-        data,
-        isLoading,
-        error,
-    };
+  return { data, isLoading, error };
 }
