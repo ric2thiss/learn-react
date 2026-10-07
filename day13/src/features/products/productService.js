@@ -1,8 +1,8 @@
 const url = "https://dummyjson.com/products"
 
-export async function getProducts(){
+export async function getProducts(signal){
     try {
-        const res = await fetch(`${url}?limit=1000`)
+        const res = await fetch(`${url}?limit=1000`, {signal})
         if(!res.ok) throw new Error("Failed to fetch product")
         const data = await res.json()
         return data.products  

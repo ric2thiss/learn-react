@@ -15,7 +15,7 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />} />
-          <Route path="/use-fetch-demo" element={<UseFetchDemoPage />} />
+          {/* <Route path="/use-fetch-demo" element={<UseFetchDemoPage />} /> */}
 
           <Route path="/profile">
             <Route path="cart" element={<CartPage />} />
